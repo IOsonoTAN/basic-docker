@@ -1,0 +1,47 @@
+version: "3"
+services:
+  basic-docker-web:
+    container_name: basic-docker
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    external_links:
+      - redis
+    environment:
+      PGHOST: db
+      PGUSER: admin
+      PGPASSWORD: 123456
+      PGDATABASE: basic101
+      REDIS_URI: redis
+    networks:
+      - shared
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456
+      POSTFRES_DB: basic101
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - shared
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - shared
+
+networks:
+  shared:
+    external:
+      name: shared
+
+volumes:
+  pgdata:

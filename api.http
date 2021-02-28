@@ -1,0 +1,14 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "username": "IOsonoTAN1",
+  "name": "Krissada1"
+}
+
+###
+
+GET http://localhost:3000/users?userId=2
+Content-Type: application/json
+
+{}
